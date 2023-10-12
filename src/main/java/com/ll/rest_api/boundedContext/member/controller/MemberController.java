@@ -2,6 +2,7 @@ package com.ll.rest_api.boundedContext.member.controller;
 
 import com.ll.rest_api.boundedContext.member.entity.Member;
 import com.ll.rest_api.boundedContext.member.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,9 @@ public class MemberController {
     }
 
     @PostMapping("/login")//requestBody가 있어야 json으로 받은 파일 해석할 수 있음
-    public Member login(@Valid @RequestBody LoginRequest loginRequest) {
+    public Member login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
+        //httpservletresponse로 헤더 설정?
+        resp.addHeader("Authentication", "JWT 토큰");
         return memberService.findByUsername(loginRequest.getUsername()).orElse(null);
     }
 }
