@@ -1,7 +1,6 @@
 package com.ll.rest_api.boundedContext.member.controller;
 
 import com.ll.rest_api.base.rsData.RsData;
-import com.ll.rest_api.boundedContext.member.entity.Member;
 import com.ll.rest_api.boundedContext.member.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -19,8 +18,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @RestController //responsebody 안붙여도댐
-@RequestMapping(value = "/member", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE) // json을 생산하고 입력받는것도 json임을 명시
-public class MemberController {
+@RequestMapping(value = "/api/v1/member", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE) // json을 생산하고 입력받는것도 json임을 명시
+public class ApiV1MemberController {
     private final MemberService memberService;
 
     @Data
