@@ -1,5 +1,6 @@
 package com.ll.rest_api.boundedContext.member.controller;
 
+import com.ll.rest_api.base.rsData.RsData;
 import com.ll.rest_api.boundedContext.member.entity.Member;
 import com.ll.rest_api.boundedContext.member.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,10 +31,19 @@ public class MemberController {
         private String password;
     }
 
+    @AllArgsConstructor
+    @Getter
+    public static class LoginResponse {
+        private final String accessToken;
+    }
+
     @PostMapping("/login")//requestBody가 있어야 json으로 받은 파일 해석할 수 있음
-    public Member login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
+    public RsData<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
+        String accessToken = memberService.genAccessToken(loginRequest.getUsername(), loginRequest.getPassword());
+
         //httpservletresponse로 헤더 설정?
-        resp.addHeader("Authentication", "JWT 토큰");
-        return memberService.findByUsername(loginRequest.getUsername()).orElse(null);
+        resp.addHeader("Authentication", accessToken);
+
+        return RsData.of("S-1", "엑세스 토큰 생성 완료", new LoginResponse(accessToken));
     }
 }
