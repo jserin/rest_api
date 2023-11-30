@@ -23,7 +23,7 @@ public class ApiSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        return http
                 .securityMatcher("/api/**") // 아래의 모든 설정은 /api/** 경로에만 적용
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(authenticationEntryPoint)
@@ -44,8 +44,6 @@ public class ApiSecurityConfig {
                 .addFilterBefore(
                         jwtAuthorizationFilter, // 엑세스 토큰으로 부터 로그인 처리
                         UsernamePasswordAuthenticationFilter.class
-                );
-
-        return http.build();
+                ).getOrBuild();
     }
 }
